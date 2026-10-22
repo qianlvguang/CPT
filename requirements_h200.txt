@@ -1,0 +1,24 @@
+# NVIDIA H200 x 8 (CUDA 12.4 / 12.6) 推荐配套环境清单
+# 基础框架与分布式训练
+torch>=2.5.1
+# Qwen3.5-MoE 与 Qwen3.8-Flash-Next (qwen4_exp) 必需 main 分支或 >=4.57.0.dev0
+git+https://github.com/huggingface/transformers.git
+ms-swift>=4.3.2
+megatron-core>=0.18.0
+mcore-bridge
+peft>=0.14.0
+deepspeed>=0.16.2
+pyarrow>=18.0.0
+
+# 混合注意力 (Gated DeltaNet + QSA) 与 MoE 高速算子
+git+https://github.com/fla-org/flash-linear-attention.git
+causal-conv1d>=1.4.0
+grouped_gemm>=0.1.6
+transformer_engine[pytorch]>=1.12.0
+flash-attn>=2.7.2
+triton>=3.1.0
+
+# 推理引擎 (按需安装于独立推理虚拟环境)
+# vllm>=0.8.0
+# sglang[all]>=0.4.4
+# flashinfer-python
