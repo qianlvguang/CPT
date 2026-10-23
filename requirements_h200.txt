@@ -1,6 +1,22 @@
-# NVIDIA H200 x 8 (CUDA 12.4 / 12.6) 推荐配套环境清单
+# ============================================================================
+# NVIDIA H200 x 8 配套环境清单
+# ============================================================================
+# 【现行基线 · 2026-10 更新】CUDA 13.1 + PyTorch 2.14.1（cu130 轮子）
+#
+#   1) 官方轮子已内置 sm_75 / sm_80 / sm_86 / sm_90 / sm_100 / sm_120 的 SASS，
+#      并附带 PTX（compute_75/80/86/90/100/120）→ H200 为 sm_90，直接可用，
+#      **无需自行编译**。
+#   2) 线上环境为 CUDA 13.1 时，请安装 **cu130** 轮子（官方无 cu131 索引）：
+#        pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu130
+#   3) CUDA 次版本兼容规则：13.0 编译的二进制可在 13.1 驱动/运行时上运行；
+#      反向不成立（cu132 / cu134 需要 13.2 / 13.4 驱动，不能用于 13.1）。
+#   4) 详细说明见 cuda13_pytorch_notes.md
+#
+# 【历史基线】CUDA 12.4 / 12.6 + torch 2.5.1（旧环境，仅作回滚参考）
+# ============================================================================
+
 # 基础框架与分布式训练
-torch>=2.5.1
+torch==2.14.1
 # Qwen3.5-MoE 与 Qwen3.8-Flash-Next (qwen4_exp) 必需 main 分支或 >=4.57.0.dev0
 git+https://github.com/huggingface/transformers.git
 ms-swift>=4.3.2
@@ -11,6 +27,8 @@ deepspeed>=0.16.2
 pyarrow>=18.0.0
 
 # 混合注意力 (Gated DeltaNet + QSA) 与 MoE 高速算子
+# ⚠️ 以下为 CUDA 算子包，升级到 CUDA 13 / torch 2.14 后需重新验证 ABI 兼容性
+#    （确认存在 cu13 轮子或可从源码编译；装完跑 SMOKE=1 冒烟测试）
 git+https://github.com/fla-org/flash-linear-attention.git
 causal-conv1d>=1.4.0
 grouped_gemm>=0.1.6

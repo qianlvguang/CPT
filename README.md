@@ -4,6 +4,12 @@
 
 硬件面向 **NVIDIA H200 (141GB HBM3e) × 8** 节点深度调优。
 
+> **环境基线（2026-10 更新）**：CUDA 13.1 + `torch==2.14.1`（**cu130** 轮子）。
+> 官方轮子已内置 `sm_75 / sm_80 / sm_86 / sm_90 / sm_100 / sm_120` 的 SASS 并附带 PTX，
+> H200（sm_90）直接可用，**无需自行编译**；官方无 `cu131` 索引，且 `cu132/cu134`
+> 需要更高驱动，故 13.1 环境请选 **cu130**。
+> 详见 [cuda13_pytorch_notes.md](cuda13_pytorch_notes.md)。
+
 ---
 
 ## 1. 核心问题诊断：为什么必须分阶段 CPT？
@@ -76,7 +82,8 @@
 | [`mcore_qsa_bridge_and_distill_plugin.py`](mcore_qsa_bridge_and_distill_plugin.py) | 进阶插件：免外部 Teacher 的微块前向 KL 自蒸馏、动态稀疏预算课程、`mcore-bridge` 透传 |
 | [`serve_vllm_sglang_h200.sh`](serve_vllm_sglang_h200.sh) | 推理引擎一键服务脚本：含 `prepare_config` 配置补齐、`vllm`、`vllm_fp8_ep8`、`sglang` 模式 |
 | [`ds_zero2_h200.json`](ds_zero2_h200.json) | `BACKEND=hf` 模式下的 DeepSpeed ZeRO-2 通信重叠配置 |
-| [`requirements_h200.txt`](requirements_h200.txt) | H200×8 训练与推理配套依赖清单 |
+| [`requirements_h200.txt`](requirements_h200.txt) | H200×8 训练与推理配套依赖清单（现行基线：CUDA 13.1 + torch 2.14.1） |
+| [`cuda13_pytorch_notes.md`](cuda13_pytorch_notes.md) | CUDA 13 / PyTorch 2.14.1 环境说明：架构支持（sm90/100/120）、CUDA 13.1 选型、验证与常见坑 |
 
 ### 快速运行示例
 
