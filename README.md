@@ -84,6 +84,7 @@
 | [`ds_zero2_h200.json`](ds_zero2_h200.json) | `BACKEND=hf` 模式下的 DeepSpeed ZeRO-2 通信重叠配置 |
 | [`requirements_h200.txt`](requirements_h200.txt) | H200×8 训练与推理配套依赖清单（现行基线：CUDA 13.1 + torch 2.14.1） |
 | [`cuda13_pytorch_notes.md`](cuda13_pytorch_notes.md) | CUDA 13 / PyTorch 2.14.1 环境说明：架构支持（sm90/100/120）、CUDA 13.1 选型、源码编译资源清单、验证与常见坑 |
+| [`qwen3_5_jev_multimodal_training_and_quantization_report.md`](qwen3_5_jev_multimodal_training_and_quantization_report.md) | Qwen3.5 系列（27B Dense & 35B-A3B MoE）多模态 JEV 决策模型训练全栈方案与低比特量化（FP8/NVFP4）深度报告 |
 | [`scripts/env/`](scripts/env/) | 环境脚本：`install_official.sh`（一键装 cu130 轮子）、`verify_arch.sh`（验证/离线检查 whl）、`build_from_source.sh`（自编译骨架） |
 
 ### 快速运行示例
